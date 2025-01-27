@@ -1,12 +1,22 @@
 const express = require("express");
+const path = require("path");
+const expressLayouts = require("express-ejs-layouts");
+
 const app = express();
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.set("layout", "layouts/main-layout");
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(expressLayouts);
+
 app.get("/", (req, res) => {
-    res.send("hello amid");
+    res.render("pages/home", { title: "main" });
 });
 
-const port = 5000;
-
-app.listen(port || 5000, () => {
-    console.log(`server is running on port ${port}`);
+app.listen(5000, () => {
+    console.log(`server is running on port 5000`);
 });
