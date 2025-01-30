@@ -2,6 +2,11 @@ const express = require("express");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 
+//import routes
+const aboutRouter = require("./routes/about");
+const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -17,17 +22,9 @@ app.get("/", (req, res) => {
     res.render("pages/home", { title: ".: Liver :.", pageTitle: "داشبورد" });
 });
 
-app.get("/about", (req, res) => {
-    res.render("pages/about", { title: ".: About Us :.", pageTitle: "درباره ما" });
-});
-
-app.get("/login", (req, res) => {
-    res.render("pages/login", { title: ".: Login :.", layout: "layouts/auth-layout" });
-});
-
-app.get("/register", (req, res) => {
-    res.render("pages/register", { title: ".: Register :.", layout: "layouts/auth-layout" });
-});
+app.use(aboutRouter);
+app.use(registerRouter);
+app.use(loginRouter);
 
 app.get("*", function (req, res) {
     res.status(404).render("pages/404", { title: ".: Error 404 :.", layout: "layouts/auth-layout" });
