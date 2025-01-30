@@ -3,9 +3,11 @@ const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 
 //import routes
+const homeRouter = require("./routes/home");
 const aboutRouter = require("./routes/about");
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
+const error404Router = require("./routes/error404");
 
 const app = express();
 
@@ -18,17 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
 
-app.get("/", (req, res) => {
-    res.render("pages/home", { title: ".: Liver :.", pageTitle: "داشبورد" });
-});
-
+app.use(homeRouter);
 app.use(aboutRouter);
 app.use(registerRouter);
 app.use(loginRouter);
-
-app.get("*", function (req, res) {
-    res.status(404).render("pages/404", { title: ".: Error 404 :.", layout: "layouts/auth-layout" });
-});
+app.use(error404Router);
 
 app.listen(5000, () => {
     console.log(`server is running on port 5000`);
