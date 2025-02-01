@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
+const sequelize = require("./database");
 
 //import routes
 const homeRouter = require("./routes/home");
@@ -10,6 +11,12 @@ const loginRouter = require("./routes/login");
 const error404Router = require("./routes/error404");
 
 const app = express();
+
+// Sync Database
+sequelize
+    .sync({ alter: true })
+    .then(() => console.log("✅ Database synced!"))
+    .catch((err) => console.error("❌ Sync error:", err));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
