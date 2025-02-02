@@ -11,10 +11,9 @@ router.get("/register", async (req, res) => {
 
 router.post("/register", async (req, res) => {
     try {
-        console.log(req.body);
         const { name, email, password } = req.body;
         const user = await User.create({ name, email, password });
-        res.render("pages/register", { title: ".: Register :.", layout: "layouts/auth-layout", user });
+        res.render("/login");
     } catch (error) {
         console.log(error);
     }
