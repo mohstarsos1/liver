@@ -13,7 +13,8 @@ router.post("/register", async (req, res) => {
     try {
         const { name, email, password } = req.body;
         const user = await User.create({ name, email, password });
-        res.render("/login");
+        req.session.message = "ثبت‌نام شما با موفقیت انجام شد. لطفاً وارد شوید.";
+        res.redirect("/login");
     } catch (error) {
         console.log(error);
     }

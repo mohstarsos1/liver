@@ -2,7 +2,9 @@ const router = require("express").Router();
 const User = require("../models/User");
 
 router.get("/login", (req, res) => {
-    res.render("pages/login", { title: ".: Login :.", layout: "layouts/auth-layout" });
+    const message = req.session?.message;
+    delete req.session?.message; // حذف پیام بعد از نمایش
+    res.render("pages/login", { title: ".: Login :.", message, layout: "layouts/auth-layout" });
 });
 
 router.post("/login", async (req, res) => {

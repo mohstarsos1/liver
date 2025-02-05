@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 const sequelize = require("./database");
+const session = require("express-session");
 
 //import routes
 const homeRouter = require("./routes/home");
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressLayouts);
+app.use(session({ secret: "mohstarsos1", cookie: { maxAge: 60000 } }));
 
 app.use(homeRouter);
 app.use(aboutRouter);
